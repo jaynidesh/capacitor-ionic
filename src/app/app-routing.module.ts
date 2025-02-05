@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { checkTutorialGuard } from './providers/check-tutorial.guard';
+import { AuthGuard } from './services/auth.guard';
+import { AuthRedirectGuard } from './services/auth-redirect-guard.guard';
 
 const routes: Routes = [
   {
@@ -18,7 +20,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule),
+    canActivate: [AuthRedirectGuard]
   },
   {
     path: 'signup',
@@ -26,7 +29,8 @@ const routes: Routes = [
   },
   {
     path: 'app',
-    loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule)
+    loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'tutorial',

@@ -16,14 +16,14 @@
   <div class="signup-form">
     <form #signupForm="ngForm" novalidate>
       <ion-input
-        label="Username"
+        label="Email"
         labelPlacement="stacked"
         fill="solid"
-        [(ngModel)]="signup.username"
-        name="username"
+        [(ngModel)]="signup.email"
+        name="email"
         type="text"
         #username="ngModel"
-        errorText="Username is required"
+        errorText="Email is required"
         required>
       </ion-input>
 

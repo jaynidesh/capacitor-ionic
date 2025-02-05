@@ -1,0 +1,78 @@
+<ion-header translucent="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+  
+      <ion-title *ngIf="!ios">Cycle Management</ion-title>
+      <!-- <ion-buttons slot="end">
+        <ion-button (click)="logout()">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons> -->
+    </ion-toolbar>
+  
+  </ion-header>
+  
+  <ion-content fullscreen="true">
+    <!-- <div *ngFor="let slot of slots; let i = index">
+        <canvas #chartCanvas></canvas>
+      </div> -->
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Cycle Management</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-segment value="{{ user_active_slot_segment }}">
+        <ng-container *ngFor="let slot of slots_data | keyvalue; let i = index">
+            <ion-segment-button value="slot_{{i}}" (click)="changeSegment(i)">
+                <ion-label>{{ slot.value.name }}</ion-label>
+              </ion-segment-button>
+        </ng-container>
+      </ion-segment>
+    <ng-container *ngFor="let slot of slots_data | keyvalue; let i = index">
+        <ng-container *ngIf="user_active_slot_segment == 'slot_' + i">
+            <ion-list lines="full">
+            <ion-item *ngFor="let month of months">
+                <ion-list class="w-100">
+                    <ion-list-header class="ion-no-padding">
+                        <ion-grid>
+                            <ion-row>
+                            <ion-col class="w-50" (click)="openSection(i + 1, month.name)">
+                                {{ month.name }}
+                            </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-list-header>
+                    <ng-container *ngIf="userOpenedSection == getSectionName(i + 1, month.name)">
+                        <ion-item *ngFor="let member of slot.value.members">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col class="w-50 center_align">
+                                        {{ users_data[member].name }}
+                                    </ion-col>
+                                    <ion-col class="w-50" *ngIf="!users_data[member].slots[slot.key].contributions[month.id - 1]">
+                                        <ion-button expand="block" (click)="markAsPaymentDone(slot.key, month, member)" color="success">Mark as Paid</ion-button>
+                                    </ion-col>
+                                    <ion-col class="w-50" *ngIf="users_data[member].slots[slot.key].contributions[month.id - 1]">
+                                        <ion-button expand="block" (click)="markAsPaymentNotDone(slot.key, month, member)" color="warning">Mark as Unpaid</ion-button>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                            
+                        </ion-item>
+                    </ng-container>
+                    
+                </ion-list>
+            </ion-item>
+        </ion-list>
+        <div class="chart">
+            <app-chart [slotIndex]="slot.key" [chartData]="getMonthlyContributions(slot.key)" [chartLabel]="'Slot ' + (i + 1)"></app-chart>
+        </div>
+        </ng-container>
+        
+        
+    </ng-container>
+
+  </ion-content>
+  

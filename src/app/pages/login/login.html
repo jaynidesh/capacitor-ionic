@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    </ion-buttons> -->
 
     <ion-title>Login</ion-title>
   </ion-toolbar>
@@ -16,16 +16,17 @@
   <div class="login-form">
     <form #loginForm="ngForm" novalidate>
       <ion-input
-        label="Username"
+        label="email"
         labelPlacement="stacked"
         fill="solid"
-        [(ngModel)]="login.username"
-        name="username"
+        [(ngModel)]="login.email"
+        name="email"
         type="text"
         #username="ngModel"
         spellcheck="false"
         autocapitalize="off"
-        errorText="Username is required"
+        errorText="Email is required"
+        [disabled]="loading"
         required>
       </ion-input>
 
@@ -37,13 +38,17 @@
         name="password"
         type="password"
         #password="ngModel"
+        [disabled]="loading"
         errorText="Password is required"
         required>
       </ion-input>
 
       <ion-row>
         <ion-col>
-          <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
+          <ion-button (click)="onLogin(loginForm)" type="submit" expand="block" [disabled]="loading">
+            <span *ngIf="!loading">Login</span>
+          <span *ngIf="loading">Logging in...</span>
+          </ion-button>
         </ion-col>
         <ion-col>
           <ion-button (click)="onSignup()" color="light" expand="block">Signup</ion-button>

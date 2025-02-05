@@ -1,4 +1,50 @@
 {
+  "cycle_schedule": [
+    {
+      "date": "2047",
+      "groups": [
+        {
+          "month": "January",
+          "slots": [
+            {
+              "slot" : 1,
+              "name" : "Yeshna"
+            },
+            {
+              "slot" : 2,
+              "name" : "Yeshna"
+            }
+          ]
+        },
+        {
+          "month": "February",
+          "slots": [
+            {
+              "slot" : 1,
+              "name" : "Jay"
+            },
+            {
+              "slot" : 2,
+              "name" : "Jay"
+            }
+          ]
+        },
+        {
+          "month": "March",
+          "slots": [
+            {
+              "slot" : 1,
+              "name" : "Aadvik"
+            },
+            {
+              "slot" : 2,
+              "name" : "Aavya"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "schedule": [
     {
       "date": "2047-05-17",

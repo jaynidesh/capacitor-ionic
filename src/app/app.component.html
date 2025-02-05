@@ -3,9 +3,9 @@
 
     <ion-menu contentId="main-content">
       <ion-content>
-        <ion-list lines="none">
+        <!-- <ion-list lines="none">
           <ion-list-header>
-            Conference
+            Cycle
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
@@ -16,30 +16,45 @@
             </ion-item>
 
           </ion-menu-toggle>
-        </ion-list>
+        </ion-list> -->
 
-        <ion-list *ngIf="loggedIn" lines="none">
+        <ion-list *ngIf="userLoggedIn" lines="none">
           <ion-list-header>
             Account
           </ion-list-header>
 
           <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/account" routerLinkActive="active" routerDirection="root" detail="false">
+            <ion-item routerLink="app/tabs/dashboard" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="person"></ion-icon>
               <ion-label>
-                Account
+                Dashboard
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-
           <ion-menu-toggle autoHide="false">
+            <ion-item routerLink="app/tabs/cycle-schedule" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-label>
+                Cycle Schedule
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle autoHide="false">
+            <ion-item routerLink="app/tabs/admin" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-label>
+                Admin
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <!-- <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="help"></ion-icon>
               <ion-label>
                 Support
               </ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
 
           <ion-menu-toggle autoHide="false">
             <ion-item button (click)="logout()" detail="false">
@@ -49,10 +64,15 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-
+          <ion-item>
+            <ion-icon slot="start" name="moon-outline"></ion-icon>
+            <ion-toggle (click)="setDarkMode()">
+              Dark Mode
+            </ion-toggle>
+          </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="!loggedIn" lines="none">
+        <ion-list *ngIf="!userLoggedIn" lines="none">
           <ion-list-header>
             Account
           </ion-list-header>
@@ -66,23 +86,23 @@
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-menu-toggle autoHide="false">
+          <!-- <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="help"></ion-icon>
               <ion-label>
                 Support
               </ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
 
-          <ion-menu-toggle autoHide="false">
+          <!-- <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/signup" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="person-add"></ion-icon>
               <ion-label>
                 Signup
               </ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
 
           <ion-item>
             <ion-icon slot="start" name="moon-outline"></ion-icon>
@@ -92,7 +112,7 @@
           </ion-item>
         </ion-list>
 
-        <ion-list lines="none">
+        <!-- <ion-list lines="none">
           <ion-list-header>
             Tutorial
           </ion-list-header>
@@ -102,7 +122,7 @@
               <ion-label>Show Tutorial</ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
+        </ion-list> -->
       </ion-content>
     </ion-menu>
 

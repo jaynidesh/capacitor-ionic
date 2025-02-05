@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'ionic.conference.app',
-  appName: 'ionic-conference-app',
+  appId: 'jay.cycle.app',
+  appName: 'Cycle',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {

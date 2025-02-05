@@ -10,6 +10,10 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Storage } from '@ionic/storage-angular';
 
 import { UserData } from './providers/user-data';
+import { AuthService } from './services/auth.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +22,10 @@ import { UserData } from './providers/user-data';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+
+  userUid: string | null = null;
+  userLoggedIn : boolean = false;
+
   appPages = [
     {
       title: 'Schedule',
@@ -51,6 +59,8 @@ export class AppComponent implements OnInit {
     private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
+    private authService: AuthService,
+    private afAuth: AngularFireAuth
   ) {
     this.initializeApp();
   }
@@ -59,6 +69,12 @@ export class AppComponent implements OnInit {
     await this.storage.create();
     this.checkLoginStatus();
     this.listenForLoginEvents();
+    this.storage.get('is_dark_mode').then(res => {
+      this.dark = (res == null ? false : res);
+    })
+    .catch(err => {
+      console.log(err)
+    })
 
     this.swUpdate.versionUpdates.subscribe(async res => {
       const toast = await this.toastCtrl.create({
@@ -88,7 +104,37 @@ export class AppComponent implements OnInit {
         SplashScreen.hide();
       }
     });
+
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userUid = user.uid; // Fetch the UID
+        this.userLoggedIn = true;
+        environment.UUID = user.uid;
+        console.log('Logged-in user UID:', this.userUid);
+      } else {
+        this.userUid = null; // No user logged in
+        this.userLoggedIn = false;
+        environment.UUID = null;
+        this.router.navigateByUrl('/login')
+        console.log('No user is logged in.');
+      }
+    });
+
+    
   }
+
+  checkIfLogin(){
+    this.authService.isLoggedIn().subscribe(val => {
+      
+      if(val){
+        return this.userData.isLoggedIn().then(loggedIn => {
+          console.log(loggedIn)
+          return this.updateLoggedInStatus(loggedIn);
+        });
+      }
+    })
+  }
+
 
   checkLoginStatus() {
     return this.userData.isLoggedIn().then(loggedIn => {
@@ -117,14 +163,25 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/schedule');
-    });
+    this.authService.logoutUser();
   }
+
+  // logout() {
+    
+  //   this.userData.logout().then(() => {
+  //     return this.router.navigateByUrl('/app/tabs/schedule');
+  //   });
+  // }
 
   openTutorial() {
     this.menu.enable(false);
     this.storage.set('ion_did_tutorial', false);
     this.router.navigateByUrl('/tutorial');
+  }
+
+  setDarkMode(){
+    let is_dark = this.dark == false ? true : false;
+    this.dark = is_dark;
+    this.storage.set('is_dark_mode', is_dark);
   }
 }

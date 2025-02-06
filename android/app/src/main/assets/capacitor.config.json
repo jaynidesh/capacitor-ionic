@@ -1,13 +1,13 @@
 {
-	"appId": "ionic.conference.app",
-	"appName": "ionic-conference-app",
+	"appId": "jay.cycle.app",
+	"appName": "Cycle",
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"plugins": {
 		"SplashScreen": {
 			"launchShowDuration": 3000,
 			"launchAutoHide": true,
-			"backgroundColor": "#ffffffff",
+			"backgroundColor": "#000000",
 			"androidSplashResourceName": "splash",
 			"androidScaleType": "CENTER_CROP",
 			"showSpinner": true,

@@ -33,7 +33,7 @@
     <ng-container *ngFor="let slot of slots_data | keyvalue; let i = index">
         <ng-container *ngIf="user_active_slot_segment == 'slot_' + i">
             <ion-list lines="full">
-            <ion-item *ngFor="let month of months">
+            <ion-item *ngFor="let month of months; let monthID = index;">
                 <ion-list class="w-100">
                     <ion-list-header class="ion-no-padding">
                         <ion-grid>
@@ -54,9 +54,16 @@
                                     <ion-col class="w-50" *ngIf="!users_data[member].slots[slot.key].contributions[month.id - 1]">
                                         <ion-button expand="block" (click)="markAsPaymentDone(slot.key, month, member)" color="success">Mark as Paid</ion-button>
                                     </ion-col>
+                                    
                                     <ion-col class="w-50" *ngIf="users_data[member].slots[slot.key].contributions[month.id - 1]">
                                         <ion-button expand="block" (click)="markAsPaymentNotDone(slot.key, month, member)" color="warning">Mark as Unpaid</ion-button>
                                     </ion-col>
+                                    <ion-col class="w-50" *ngIf="monthID == (users_data[member].slots[slot.key].chosenMonth - 1) && !users_data[member].slots[slot.key].delivered">
+                                      <ion-button expand="block" (click)="markAsDeliveryDone(slot.key, month, member)" color="success">Mark as Delivered</ion-button>
+                                  </ion-col>
+                                    <ion-col class="w-50" *ngIf="monthID== (users_data[member].slots[slot.key].chosenMonth - 1) && users_data[member].slots[slot.key].delivered">
+                                      <ion-button expand="block" (click)="markAsDeliveryNotDone(slot.key, month, member)" color="warning">Mark as Undelivered</ion-button>
+                                  </ion-col>
                                 </ion-row>
                             </ion-grid>
                             

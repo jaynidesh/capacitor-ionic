@@ -39,7 +39,7 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle autoHide="false">
+          <ion-menu-toggle autoHide="false" *ngIf="userData?.is_admin">
             <ion-item routerLink="app/tabs/admin" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="person"></ion-icon>
               <ion-label>
@@ -64,12 +64,12 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-item>
+          <!-- <ion-item>
             <ion-icon slot="start" name="moon-outline"></ion-icon>
             <ion-toggle (click)="setDarkMode()">
               Dark Mode
             </ion-toggle>
-          </ion-item>
+          </ion-item> -->
         </ion-list>
 
         <ion-list *ngIf="!userLoggedIn" lines="none">

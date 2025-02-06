@@ -82,6 +82,7 @@ export class AuthService {
         this.angularFireAuth.signOut()
           .then(() => {
             //console.log("LOG Out");
+            environment.UUID = null;
             this.router.navigateByUrl('/login');
           }).catch((error) => {
             reject();

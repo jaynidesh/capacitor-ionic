@@ -9,11 +9,12 @@ import { SplashScreen } from '@capacitor/splash-screen';
 
 import { Storage } from '@ionic/storage-angular';
 
-import { UserData } from './providers/user-data';
+// import { UserData } from './providers/user-data';
 import { AuthService } from './services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 import { environment } from '../environments/environment';
+import { RealtimeCrudService } from './services/realtime-crud.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
 
   userUid: string | null = null;
   userLoggedIn : boolean = false;
-
+  userData : any = "";
   appPages = [
     {
       title: 'Schedule',
@@ -56,21 +57,22 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private router: Router,
     private storage: Storage,
-    private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
     private authService: AuthService,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private realtimeCrudService : RealtimeCrudService,
   ) {
     this.initializeApp();
   }
 
   async ngOnInit() {
     await this.storage.create();
-    this.checkLoginStatus();
+    // this.checkLoginStatus();
     this.listenForLoginEvents();
     this.storage.get('is_dark_mode').then(res => {
       this.dark = (res == null ? false : res);
+      this.dark = true
     })
     .catch(err => {
       console.log(err)
@@ -111,6 +113,7 @@ export class AppComponent implements OnInit {
         this.userLoggedIn = true;
         environment.UUID = user.uid;
         console.log('Logged-in user UID:', this.userUid);
+        this.getUserData(this.userUid);
       } else {
         this.userUid = null; // No user logged in
         this.userLoggedIn = false;
@@ -121,6 +124,14 @@ export class AppComponent implements OnInit {
     });
 
     
+
+    
+  }
+
+  getUserData(uuid){
+    this.realtimeCrudService.get(`/users/${uuid}`).subscribe(val =>  {
+      this.userData = val;
+    })
   }
 
   checkIfLogin(){

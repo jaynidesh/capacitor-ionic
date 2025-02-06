@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title *ngIf="!ios">{{ user_data?.name }}</ion-title>
+    <ion-title>{{ user_data?.name }}</ion-title>
     <!-- <ion-buttons slot="end">
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
@@ -14,55 +14,62 @@
 
 </ion-header>
 
-<ion-content fullscreen="true">
-  <!-- <canvas #barCanvas></canvas> -->
-  <ion-header collapse="condense">
+<ion-content fullscreen="true" class="ion-padding ion-margin">
+  <!-- <ion-header collapse="condense"></ion-header>
     <ion-toolbar>
       <ion-title size="large">{{ user_data?.name }} </ion-title>
     </ion-toolbar>
-  </ion-header>
-  <ng-container *ngFor="let slot of user_slots | keyvalue; let i = index">
-    <ion-list lines="full" class="ion-margin-bottom">
-      <ion-item>
-        <ion-list-header class="ion-no-padding">
-          <ion-grid>
-            <ion-row>
-              <ion-col class="w-50">
-                Slot {{ i + 1 }}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list-header>
-      </ion-item>
-      <ion-item>
-        <!-- <ion-list-header class="ion-no-padding">
-          <ion-grid>
-            <ion-row>
-              <ion-col class="w-50">
-                Months
-              </ion-col>
-              <ion-col class="ion-padding-start ion-text-center">
-                  Payment
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list-header> -->
+  </ion-header> -->
+  <div class="content-wrapper" *ngFor="let slot of user_slots | keyvalue; let i = index">
+    <!-- <canvas #barCanvas></canvas> -->
+      <div class="glow"></div>
+      <div class="glow glow2"></div>
+      <div class="content">
         
-      </ion-item>
-      <ng-container *ngFor="let month of months">
-        <ion-item [class.selected_month]="slot.value?.chosenMonth == month.id" [class.selected_month_delivered]="slot.value?.chosenMonth == month.id">
-          <ion-grid>
-            <ion-row>
-              <ion-col class="w-50">
-                {{ month.name }}
-              </ion-col>
-              <ion-col class="ion-padding-start ion-text-center" [ngClass]="slot.value?.contributions[month.id - 1] ? 'paid' : 'pending'">
-                  {{ slot.value?.contributions[month.id - 1] ? 'Done' : 'Pending' }}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-item>
-      </ng-container>
-    </ion-list>
-  </ng-container>
+        <ng-container>
+          <ion-list lines="full" class="ion-margin-bottom">
+            <ion-item>
+              <ion-list-header class="ion-no-padding">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="w-50">
+                      Slot {{ i + 1 }}
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list-header>
+            </ion-item>
+            <ion-item>
+              <ion-list-header class="ion-no-padding">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="w-50">
+                      Months
+                    </ion-col>
+                    <ion-col class="ion-padding-start ion-text-center">
+                        Payment
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list-header>
+              
+            </ion-item>
+            <ng-container *ngFor="let month of months">
+              <ion-item><!-- [class.selected_month]="slot.value?.chosenMonth == month.id" [class.selected_month_delivered]="slot.value?.chosenMonth == month.id"-->
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="w-50 center_align">
+                      {{ month.name }} <ion-icon class="left_margin" *ngIf="slot.value?.chosenMonth == month.id" name="cash-outline"></ion-icon>
+                    </ion-col>
+                    <ion-col class="ion-padding-start ion-text-center" [ngClass]="slot.value?.contributions[month.id - 1] ? 'paid' : 'pending'">
+                        {{ slot.value?.contributions[month.id - 1] ? 'Done' : 'Pending' }}
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ng-container>
+      </div>
+  </div>
 </ion-content>

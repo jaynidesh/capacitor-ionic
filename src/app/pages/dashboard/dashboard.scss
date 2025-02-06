@@ -37,14 +37,17 @@ $categories: (
 
 .pending{
   background: #fed035;
+  border-radius: 12px;
 }
 
 .paid{
   background: #69bb7b;
+  border-radius: 12px;
 }
 
 .delivered{
   background: #69bb7b;
+  border-radius: 12px;
 }
 
 .w-50{
@@ -56,5 +59,64 @@ $categories: (
 }
 
 .selected_month_delivered{
-  --background: #00aa25;
+  --background: #ffffff;
+
+    *{
+      color: #000000;
+      --color: #000000;
+    }
+}
+
+.center_align{
+  display: flex;
+  align-items: center;
+}
+
+.left_margin{
+  margin-left: 10px;
+}
+
+.content-wrapper{
+  // background: linear-gradient(to bottom right,#0894FF 0%,#C959DD 34%,#FF2E54 68%,#FF9004);
+  position: relative;
+  padding: 10px;
+  margin-bottom: 25px;
+  
+  .glow{
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border: 0;
+    filter: blur(1px);
+
+    &:after{
+      --bg-size: calc(100% + 14px);
+      --gradient: linear-gradient(to bottom right, #0894FF 0%, #C959DD 34%, #FF2E54 68%, #FF9004);
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      background: var(--gradient) 50% / var(--bg-size) var(--bg-size);
+      border-radius: 28px;
+      border: 3px solid rgba(0, 0, 0, 0);
+      mask: linear-gradient(hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, 0)), linear-gradient(hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+      mask-clip: padding-box, border-box;
+      mask-composite: intersect;
+    }
+    
+
+    &.glow2{
+      filter: blur(7px);
+      
+      &:after{
+        border: 8px solid rgba(0, 0, 0, 0);
+      }
+    }
+  }
+
+  .content{
+    margin: 10px;
+    background: #1d1d1f;
+  }
+
 }

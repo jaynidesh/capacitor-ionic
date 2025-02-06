@@ -137,6 +137,26 @@ export class CycleManagementComponent implements AfterViewInit {
     })
   }
 
+  markAsDeliveryDone(slot, month, member){
+    this.realtimeCrudService.set(`/users/${member}/slots/${slot}/delivered`, true)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  markAsDeliveryNotDone(slot, month, member){
+    this.realtimeCrudService.set(`/users/${member}/slots/${slot}/delivered`, false)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   // getMonthlyContributions(slotIndex: number): number[] {
 
     
